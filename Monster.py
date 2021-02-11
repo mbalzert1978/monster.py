@@ -7,7 +7,18 @@ def game_end(winner_name):
     print(f"{winner_name} won the game.")
 
 def InputFunction(max_ele):
-    pass
+    """
+    Funktion gibt einen wert zurück der max_ele entspricht nach input
+    input wird auf max_ele geprüft und auf validität.
+    max_ele = 0 : hier wird ein str zurückgegeben und (bsp Name_Spieler)
+    max_ele = 1 : hier wird geprüft ob der spieler 1 eingegeben hat
+    max_ele = 2 : hier wird geprüft ob der spieler 1 oder 2 eingegeben hat
+    max_ele = 3 : hier wird geprüft ob der spieler 1 oder 2 oder 3 eingegeben hat
+    max_ele = 4 : hier wird geprüft ob der spieler 1-4 eingegeben hat
+    usw.
+    
+    """
+    return "1"
 
 
 game_running = True
@@ -24,9 +35,9 @@ while game_running == True:
     
     print("---" *7)
     print("Tell me the Name of your Hero: ")
-    player["name"] = input()
+    player["name"] = InputFunction(0)
 
-    while new_round == True:
+    while new_round:
         counter = counter + 1
         print("---" *7)
         print("Please select an action")
@@ -37,7 +48,7 @@ while game_running == True:
         player_choice = InputFunction(4)
 
         if player_choice == "1":
-            print(player["name"] + " attacks monster for " + str(player["attack"]) +" damage")
+            print(f"{player['name']} attacks monster for {player['attack']} damage")
             print("---" *7)
             monster["health"] = monster["health"] - player["attack"]
             
@@ -46,7 +57,7 @@ while game_running == True:
             else:
                 cma = randint(monster["attack_min"], monster["attack_max"])
                 #cma = randint(monster.get("attack_min"), monster.get("attack_max")) ist auch möglich (läuft auch bei Fehlern durch)
-                print(monster["name"] + " attacks " + player["name"] + " for " + str(cma) +" damage")
+                print(f'{monster["name"]} attacks {player["name"]} for {cma} damage')
                 print("---" *7)
                 player["health"] = player["health"] - cma
             
@@ -55,11 +66,10 @@ while game_running == True:
 
         elif player_choice == "2":
             cma = randint(monster["attack_min"], monster["attack_max"])
-            print(player["name"] + " heals himself for " + str(player["heal"]))
+            print(f'{player["name"]} heals himself for {player["heal"]}')
             print("---" *7)
             player["health"] = player["health"] + player["heal"]
-            
-            print(monster["name"] + " attacks " + player["name"] + " for " + str(cma) +" damage")
+            print(f'{monster["name"]} attacks {player["name"]} for {cma} damage')
             print("---" *7)
             player["health"] = player["health"] - cma
 
@@ -79,11 +89,11 @@ while game_running == True:
         
         if player_won == False and monster_won == False:
             print("---" *7)
-            print(player["name"] + " has " + str(player["health"]) + " health left")
+            print(f'{player["name"]} has {player["health"]} health left')
             print("---" *7)
             print("\n")
             print("---" *7)
-            print(monster["name"] + " has " + str(monster["health"]) + " health left")
+            print(f'{monster["name"]} has {monster["health"]} health left')
             print("---" *7)
                 
         elif player_won:
