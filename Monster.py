@@ -6,6 +6,10 @@ from random import randint
 def game_end(winner_name):
     print(f"{winner_name} won the game.")
 
+def InputFunction(max_ele):
+    pass
+
+
 game_running = True
 game_result = []
 
@@ -30,7 +34,7 @@ while game_running == True:
         print("2) heal")
         print("3) Exit game")
         print("4) show results")
-        player_choice = input()
+        player_choice = InputFunction(4)
 
         if player_choice == "1":
             print(player["name"] + " attacks monster for " + str(player["attack"]) +" damage")
