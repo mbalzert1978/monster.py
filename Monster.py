@@ -95,3 +95,4 @@ while game_running == True:
             new_round = False
 
 # Hat das geklappt?
+# Gebraddel und Geballer
