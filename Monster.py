@@ -1,6 +1,5 @@
 from random import randint
 
-
 # final game v1
 # def calc_monster_attack():
 #     return randint(monster["attack_min"], monster["attack_max"])
