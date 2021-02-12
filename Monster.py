@@ -9,6 +9,15 @@ def game_end(winner_name):
     print(f"{winner_name} won the game.")
 
 def InputFunction(MaxInt):
+    """
+    funktion InputFunction(str_check)
+    die funktion bekommt einen str_check mit value:
+    bei str_check 0 soll die funktion die player_input zurückgeben bei player_input "" wird "player" als default zurückgegeben.
+    bei str_check 1 wird geprüft ob player_input 1 ist und nichts anderes ist erlaubt.
+    bei str_check 2 wird geprüft ob player_input 1 oder 2 ist und nichts anderes ist erlaubt.
+    bei str_check 3 wird geprüft ob player_input 1 oder 2 oder 3 ist und nichts anderes ist erlaubt.
+    bei str_check 4 wird geprüft ob player_input 1 oder 2 oder 3 oder 4 ist und nichts anderes ist erlaubt.
+    """
     x = input()
     if MaxInt == 0:
         return x
