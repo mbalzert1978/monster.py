@@ -4,10 +4,9 @@ from random import randint
 # final game v1
 # def calc_monster_attack():
 #     return randint(monster["attack_min"], monster["attack_max"])
-# needs fixing
+
 def game_end(winner_name):
     print(f"{winner_name} won the game.")
-
 
 def InputFunction(MaxInt):
     x = input()
@@ -135,7 +134,6 @@ while game_running == True:
             print("---" * 7)
             print(f'{monster["name"]} has {monster["health"]} health left')
             print("---" * 7)
-
         elif player_won:
             game_end(player["name"])
             round_result = {"name": player["name"], "health": player["health"], "rounds": counter}
