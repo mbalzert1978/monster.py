@@ -81,7 +81,11 @@ while game_running == True:
     player_won = False
     monster_won = False
     counter = 0
-    player = {"name": "Marco", "attack": 10, "heal": 16, "health": 100}
+    # 2 klassem eingefügt ohne den code zu brechen
+    rogue = {"attack_min": 10, "attack_max": 30, "health": 100}
+    warrior = {"attack": 20, "heal": 16, "health": 100}
+    player = {"attack": 10, "heal": 16, "health": 100}
+    
     monster = {"name": "Mastodon", "attack_min": 10, "attack_max": 20, "health": 100}
 
 
