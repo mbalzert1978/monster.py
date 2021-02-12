@@ -10,32 +10,42 @@ def game_end(winner_name):
 
 
 def InputFunction(MaxInt):
+<<<<<<< Updated upstream
     x = input()
+=======
+    """
+    funktion InputFunction(str_check)
+    die funktion bekommt einen str_check mit value:
+    bei str_check 0 soll die funktion die player_input zurückgeben bei player_input "" wird "player" als default zurückgegeben.
+    bei str_check 1 wird geprüft ob player_input 1 ist und nichts anderes ist erlaubt.
+    bei str_check 2 wird geprüft ob player_input 1 oder 2 ist und nichts anderes ist erlaubt.
+    bei str_check 3 wird geprüft ob player_input 1 oder 2 oder 3 ist und nichts anderes ist erlaubt.
+    bei str_check 4 wird geprüft ob player_input 1 oder 2 oder 3 oder 4 ist und nichts anderes ist erlaubt.
+    """
+    player_input = input()
+>>>>>>> Stashed changes
     if MaxInt == 0:
-        return x
+        if player_input == "":
+            print("Leere Eingabe wird nicht akzeptiert")
+            print("Bitte Eingabe korrekt wiederholen")
+            return InputFunction(MaxInt)
+        else:
+            return player_input
     try:
-        x = int(x)
-        if type(x) == int and x <= MaxInt and x >= 1:
-            return str(x)
+        x = int(player_input)
+        if type(player_input) == int and player_input <= MaxInt and player_input >= 1:
+            return str(player_input)
         else:
             print("Fehler:", end=" ")
-            if x < 1 or x > MaxInt:
+            if x < 1 or player_input > MaxInt:
                 print(f"Eingabe nicht im Bereich zwischen einschließlich 1 und {MaxInt}")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-            elif type(x) == float:
-                print("Eingabe nur in GANZZAHLEN du IDIOT")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-            else:
-                print("Der Scheiß war jetzt so heftig das ich nichtmal eine Fehlermeldung für dich habe")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
     except:
         print("Fehler:", end=" ")
         try:
-            x = float(x)
-            if type(x) == float:
+            x = float(player_input)
+            if type(player_input) == float:
                 print("Eingabe nur in GANZZAHLEN du IDIOT")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
@@ -44,15 +54,15 @@ def InputFunction(MaxInt):
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
         except:
-            if x == "":
+            if player_input == "":
                 print("Keine Eingabe ist auch ne Eingabe? was denkst du dir?")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
-            elif type(x) == str:
-                print("Eingabe keine Zahl sondern Text (String)")
+            elif type(player_input) == str:
+                print("Eingabe keine Zahl sondern ein Text (String)")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
-            elif type(x) == float:
+            elif type(player_input) == float:
                 print("Eingabe nur in GANZZAHLEN du IDIOT")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
