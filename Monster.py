@@ -72,6 +72,7 @@ def InputFunction(MaxInt):
 
 game_running = True
 game_result = []
+player_name = InputFunction(0)
 
 while game_running == True:
     new_round = True
@@ -83,7 +84,6 @@ while game_running == True:
 
     print("---" * 7)
     print("Tell me the Name of your Hero: ")
-    player["name"] = InputFunction(0)
 
     while new_round:
         counter = counter + 1
@@ -96,7 +96,7 @@ while game_running == True:
         player_choice = InputFunction(4)
 
         if player_choice == "1":
-            print(f"{player['name']} attacks monster for {player['attack']} damage")
+            print(f"{player_name} attacks monster for {player['attack']} damage")
             print("---" * 7)
             monster["health"] = monster["health"] - player["attack"]
 
@@ -105,7 +105,7 @@ while game_running == True:
             else:
                 cma = randint(monster["attack_min"], monster["attack_max"])
                 # cma = randint(monster.get("attack_min"), monster.get("attack_max")) ist auch möglich (läuft auch bei Fehlern durch)
-                print(f'{monster["name"]} attacks {player["name"]} for {cma} damage')
+                print(f'{monster["name"]} attacks {player_name} for {cma} damage')
                 print("---" * 7)
                 player["health"] = player["health"] - cma
 
@@ -114,10 +114,10 @@ while game_running == True:
 
         elif player_choice == "2":
             cma = randint(monster["attack_min"], monster["attack_max"])
-            print(f'{player["name"]} heals himself for {player["heal"]}')
+            print(f'{player_name} heals himself for {player["heal"]}')
             print("---" * 7)
             player["health"] = player["health"] + player["heal"]
-            print(f'{monster["name"]} attacks {player["name"]} for {cma} damage')
+            print(f'{monster["name"]} attacks {player_name} for {cma} damage')
             print("---" * 7)
             player["health"] = player["health"] - cma
 
@@ -137,7 +137,7 @@ while game_running == True:
 
         if player_won == False and monster_won == False:
             print("---" * 7)
-            print(f'{player["name"]} has {player["health"]} health left')
+            print(f'{player_name} has {player["health"]} health left')
             print("---" * 7)
             print("\n")
             print("---" * 7)
@@ -145,13 +145,13 @@ while game_running == True:
             print("---" * 7)
         elif player_won:
             game_end(player["name"])
-            round_result = {"name": player["name"], "health": player["health"], "rounds": counter}
+            round_result = {"name": player_name, "health": player["health"], "rounds": counter}
             game_result.append(round_result)
             new_round = False
 
         elif monster_won:
             game_end(monster["name"])
-            round_result = {"name": player["name"], "health": player["health"], "rounds": counter}
+            round_result = {"name": player_name, "health": player["health"], "rounds": counter}
             game_result.append(round_result)
             new_round = False
 
