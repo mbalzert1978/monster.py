@@ -72,6 +72,8 @@ def InputFunction(MaxInt):
 
 game_running = True
 game_result = []
+print("---" * 7)
+print("Tell me the Name of your Hero: ")
 player_name = InputFunction(0)
 
 while game_running == True:
@@ -82,8 +84,6 @@ while game_running == True:
     player = {"name": "Marco", "attack": 10, "heal": 16, "health": 100}
     monster = {"name": "Mastodon", "attack_min": 10, "attack_max": 20, "health": 100}
 
-    print("---" * 7)
-    print("Tell me the Name of your Hero: ")
 
     while new_round:
         counter = counter + 1
