@@ -19,7 +19,7 @@ def InputFunction(MaxInt):
     """
     x = input()
     if MaxInt == 0:
-        return x
+        return "Player"
     try:
         x = int(x)
         if type(x) == int and x <= MaxInt and x >= 1:
