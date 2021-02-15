@@ -110,7 +110,7 @@ while game_running == True:
                 print(f"{player_name} attacks monster for {rogue_attack} damage")
                 print("---" * 7)
                 monster["health"] = monster["health"] - rogue_attack
-            if player_class == 2:
+            if player_class == "2":
                 print(f"{player_name} attacks monster for {paladin['attack']} damage")
                 print("---" * 7)
                 monster["health"] = monster["health"] - paladin["attack"]
