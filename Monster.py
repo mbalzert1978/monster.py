@@ -1,3 +1,4 @@
+import os
 from random import randint
 
 # final game v1
@@ -75,20 +76,25 @@ print("---" * 7)
 print("Tell me the Name of your Hero: ")
 player_name = InputFunction(0)
 
+print("What Heroclass should your Hero be? (1) Rogue, or (2) Paladin: ")
+player_class = InputFunction(2)
+
 while game_running == True:
     new_round = True
     player_won = False
     monster_won = False
     counter = 0
     # 2 klassem eingefügt ohne den code zu brechen
-    rogue = {"attack_min": 10, "attack_max": 30, "health": 100}
-    warrior = {"attack": 20, "heal": 16, "health": 100}
-    player = {"attack": 10, "heal": 16, "health": 100}
+    rogue = {"attack_min": 10, "attack_max": 40}
+    paladin = {"attack": 20, "heal": 16}
+    player = {"health": 100}
     
     monster = {"name": "Mastodon", "attack_min": 10, "attack_max": 20, "health": 100}
 
 
     while new_round:
+        input()
+        os.system("cls")
         counter = counter + 1
         print("---" * 7)
         print("Please select an action")
@@ -99,15 +105,20 @@ while game_running == True:
         player_choice = InputFunction(4)
 
         if player_choice == "1":
-            print(f"{player_name} attacks monster for {player['attack']} damage")
-            print("---" * 7)
-            monster["health"] = monster["health"] - player["attack"]
+            if player_class == "1":
+                rogue_attack = randint(rogue["attack_min"], rogue["attack_max"])
+                print(f"{player_name} attacks monster for {rogue_attack} damage")
+                print("---" * 7)
+                monster["health"] = monster["health"] - rogue_attack
+            if player_class == 2:
+                print(f"{player_name} attacks monster for {paladin['attack']} damage")
+                print("---" * 7)
+                monster["health"] = monster["health"] - paladin["attack"]
 
             if monster["health"] <= 0:
                 player_won = True
             else:
                 cma = randint(monster["attack_min"], monster["attack_max"])
-                # cma = randint(monster.get("attack_min"), monster.get("attack_max")) ist auch möglich (läuft auch bei Fehlern durch)
                 print(f'{monster["name"]} attacks {player_name} for {cma} damage')
                 print("---" * 7)
                 player["health"] = player["health"] - cma
@@ -116,13 +127,16 @@ while game_running == True:
                 monster_won = True
 
         elif player_choice == "2":
-            cma = randint(monster["attack_min"], monster["attack_max"])
-            print(f'{player_name} heals himself for {player["heal"]}')
-            print("---" * 7)
-            player["health"] = player["health"] + player["heal"]
-            print(f'{monster["name"]} attacks {player_name} for {cma} damage')
-            print("---" * 7)
-            player["health"] = player["health"] - cma
+            if player_class == "2":
+                cma = randint(monster["attack_min"], monster["attack_max"])
+                print(f'{player_name} heals himself for {paladin["heal"]}')
+                print("---" * 7)
+                player["health"] = player["health"] + paladin["heal"]
+                print(f'{monster["name"]} attacks {player_name} for {cma} damage')
+                print("---" * 7)
+                player["health"] = player["health"] - cma
+            else:
+                print("Rogues cant heal :)")
 
             if player["health"] <= 0:
                 monster_won = True
@@ -147,7 +161,7 @@ while game_running == True:
             print(f'{monster["name"]} has {monster["health"]} health left')
             print("---" * 7)
         elif player_won:
-            game_end(player["name"])
+            game_end(player_name)
             round_result = {"name": player_name, "health": player["health"], "rounds": counter}
             game_result.append(round_result)
             new_round = False
