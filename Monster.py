@@ -135,12 +135,14 @@ while game_running == True:
                 monster["health"] = monster["health"] - paladin["attack"]
                 time.sleep(1)
 
+
             if monster["health"] <= 0:
                 player_won = True
             else:
                 cma = randint(monster["attack_min"], monster["attack_max"])
                 print(f'{monster["name"]} attacks {player_name} for {cma} damage')
                 print("---" *10)
+
                 player["health"] = player["health"] - cma
                 input("Enter for next round.")
 
@@ -174,5 +176,3 @@ while game_running == True:
 
         else:
             print("Invalid input")
-
-
