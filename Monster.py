@@ -36,7 +36,7 @@ def InputFunction(MaxInt):
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
             else:
-                print("Der Scheiß war jetzt so heftig das ich nichtmal eine Fehlermeldung für dich habe")
+                print("Der Scheiß war jetzt so heftig, dass ich nichtmal eine Fehlermeldung für dich habe")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
     except:
@@ -48,7 +48,7 @@ def InputFunction(MaxInt):
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
             else:
-                print("Der Scheiß war jetzt so heftig das ich nichtmal eine Fehlermeldung für dich habe")
+                print("Der Scheiß war jetzt so heftig, dass ich nichtmal eine Fehlermeldung für dich habe")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
         except:
@@ -65,7 +65,7 @@ def InputFunction(MaxInt):
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
             else:
-                print("Der Scheiß war jetzt so heftig das ich nichtmal eine Fehlermeldung für dich habe")
+                print("Der Scheiß war jetzt so heftig, dass ich nichtmal eine Fehlermeldung für dich habe")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
 
