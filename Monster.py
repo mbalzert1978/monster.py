@@ -73,7 +73,6 @@ def InputFunction(MaxInt):
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
 
-
 def new_print(text, zentriert):        # text mit /n für mehrere zeilen
     text = str(text)                    #zentriert mit M= jede zeile gemittelt
     text = text.split("/n")             #R= jede zeile rechts bündig
@@ -130,7 +129,6 @@ while game_running == True:
     player_won = False
     monster_won = False
     counter = 0
-    # 2 klassem eingefügt ohne den code zu brechen
     rogue = {"attack_min": 10, "attack_max": 40}
     paladin = {"attack": 20, "heal": 16}
     player = {"health": 100}
