@@ -30,48 +30,18 @@ def InputFunction(MaxInt):
             return str(player_input)
         else:
             print("Fehler:", end=" ")
-
             if player_input < 1 or player_input > MaxInt:
                 print(f"Eingabe nicht im Bereich zwischen einschließlich 1 und {MaxInt}")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
-            elif type(player_input) == float:
-                print("Eingabe nur in GANZZAHLEN du IDIOT")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
             else:
                 print("Der Scheiß war jetzt so heftig, dass ich nichtmal eine Fehlermeldung für dich habe")
                 print("Bitte Eingabe korrekt wiederholen")
                 return InputFunction(MaxInt)
-    except TypeError:               #<--- bitteschön
-        print("Fehler:", end=" ")
-        try:
-            player_input = float(player_input)
-            if type(player_input) == float:
-                print("Eingabe nur in GANZZAHLEN du IDIOT")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-            else:
-                print("Der Scheiß war jetzt so heftig, dass ich nichtmal eine Fehlermeldung für dich habe")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-        except TypeError:
-            if player_input == "":
-                print("Keine Eingabe ist auch ne Eingabe? was denkst du dir?")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-            elif type(player_input) == str:
-                print("Eingabe keine Zahl sondern Text (String)")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-            elif type(player_input) == float:
-                print("Eingabe nur in GANZZAHLEN du IDIOT")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
-            else:
-                print("Der Scheiß war jetzt so heftig, dass ich nichtmal eine Fehlermeldung für dich habe")
-                print("Bitte Eingabe korrekt wiederholen")
-                return InputFunction(MaxInt)
+    except ValueError or TypeError:               #<--- bitteschön
+        print("Incorect input:", end=" ")
+        return InputFunction(MaxInt)
+
 
 def new_print(text, zentriert):        # text mit /n für mehrere zeilen
     text = str(text)                    #zentriert mit M= jede zeile gemittelt
@@ -130,7 +100,7 @@ while game_running == True:
     monster_won = False
     counter = 0
     rogue = {"attack_min": 10, "attack_max": 40}
-    paladin = {"attack": 20, "heal": 16}
+    paladin = {"attack": 10, "heal": 16}
     player = {"health": 100}
     monster = {"name": "Mastodon", "attack_min": 10, "attack_max": 20, "health": 100}
 
@@ -151,27 +121,25 @@ while game_running == True:
             round_result = {"name": player_name, "health": player["health"], "rounds": counter}
             game_result.append(round_result)
             new_round = False
-        time.sleep(1)
+        input("Enter for next round.")
+        os.system("cls")
         new_print("Please select an action/n1) attack/n2) heal/n3) Exit game/n4) show results", "l")
         player_choice = InputFunction(4)
         os.system("cls")
         if player_choice == "1":
             if player_class == "1":
                 rogue_attack = randint(rogue["attack_min"], rogue["attack_max"])
-                new_print(f"{player_name} attacks monster for {rogue_attack} damage", "m")
+                cache_pattack = f"{player_name} attacks monster for {rogue_attack} damage"
                 monster["health"] = monster["health"] - rogue_attack
-                time.sleep(1)
-                os.system("cls")
             elif player_class == "2":
-                new_print(f"{player_name} attacks monster for {paladin['attack']} damage","m")
+                cache_pattack = f"{player_name} attacks monster for {paladin['attack']} damage"
                 monster["health"] = monster["health"] - paladin["attack"]
-                time.sleep(1)
-                os.system("cls")
             if monster["health"] <= 0:
                 player_won = True
             else:
+                os.system("cls")
                 cma = randint(monster["attack_min"], monster["attack_max"])
-                new_print(f'{monster["name"]} attacks {player_name} for {cma} damage', "m")
+                new_print(f'{monster["name"]} attacks {player_name} for {cma} damage/n /n{cache_pattack}', "m")
                 player["health"] = player["health"] - cma
                 input("Enter for next round.")
             if player["health"] <= 0:
@@ -193,10 +161,12 @@ while game_running == True:
             break
 
         elif player_choice == "4":
+            highscore = ""
             for element in game_result:
-                os.system("cls")
-                new_print(element, "m")
-                input("Enter for new Game/next Round")
+                for a, b in element.items(): 
+                    highscore += f"{a} : {b}/n"
+            new_print(highscore, "l")
+            input("Enter for new Game/next Round")
         else:
             new_print("Invalid input", "m")
 
