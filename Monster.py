@@ -139,14 +139,7 @@ while game_running == True:
     while new_round:
         os.system("cls")
         counter = counter + 1
-        print("---" * 7)
-        print("Please select an action")
-        print("1) attack")
-        print("2) heal")
-        print("3) Exit game")
-        print("4) show results")
         if player_won == False and monster_won == False:
-            os.system("cls")
             new_print(f'{player_name} has {player["health"]} health left/n /n{monster["name"]} has {monster["health"]} health left', "m")
 
         elif player_won:
@@ -160,24 +153,21 @@ while game_running == True:
             round_result = {"name": player_name, "health": player["health"], "rounds": counter}
             game_result.append(round_result)
             new_round = False
-        time.sleep(3)
-        os.system("cls")
+        time.sleep(1)
         new_print("Please select an action/n1) attack/n2) heal/n3) Exit game/n4) show results", "l")
         player_choice = InputFunction(4)
         os.system("cls")
         if player_choice == "1":
-            new_print(f"{player['name']} attacks monster for {player['attack']} damage", "m")
-            monster["health"] = monster["health"] - player["attack"]
             if player_class == "1":
                 rogue_attack = randint(rogue["attack_min"], rogue["attack_max"])
                 new_print(f"{player_name} attacks monster for {rogue_attack} damage", "m")
                 monster["health"] = monster["health"] - rogue_attack
-                time.sleep(2)
+                time.sleep(1)
                 os.system("cls")
             elif player_class == "2":
                 new_print(f"{player_name} attacks monster for {paladin['attack']} damage","m")
                 monster["health"] = monster["health"] - paladin["attack"]
-                time.sleep(2)
+                time.sleep(1)
                 os.system("cls")
             if monster["health"] <= 0:
                 player_won = True
@@ -190,20 +180,10 @@ while game_running == True:
                 monster_won = True
 
         elif player_choice == "2":
-            cma = randint(monster["attack_min"], monster["attack_max"])
-            new_print(f'{player["name"]} heals himself for {player["heal"]}', "m")
-            player["health"] = player["health"] + player["heal"]
-            new_print(f'{monster["name"]} attacks {player["name"]} for {cma} damage', "m")
-            player["health"] = player["health"] - cma
-            if player["health"] <= 0:
-                monster_won = True
                 if player_class == "2":
                     cma = randint(monster["attack_min"], monster["attack_max"])
                     new_print(f'{player_name} heals himself for {paladin["heal"]}/n /n{monster["name"]} attacks {player_name} for {cma} damage', "m")
-                    #print("---" *10)
                     player["health"] = player["health"] + paladin["heal"]
-                    #print(f'{monster["name"]} attacks {player_name} for {cma} damage')
-                    #print("---" *10)
                     player["health"] = player["health"] - cma
                     input("Enter for next round.")
                 else:
