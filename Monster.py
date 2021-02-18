@@ -170,3 +170,4 @@ while game_running == True:
         else:
             new_print("Invalid input", "m")
 
+#rofl
