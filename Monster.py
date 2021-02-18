@@ -169,5 +169,3 @@ while game_running == True:
             input("Enter for new Game/next Round")
         else:
             new_print("Invalid input", "m")
-
-#rofl
