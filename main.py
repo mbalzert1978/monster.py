@@ -108,9 +108,9 @@ monster for {paladin_attack} damage")
                 for element in game_result:
                     for a, b in element.items():
                         highscore += f"{a} : {b}\n"
-                print(highscore, "l")
+                print(highscore)
                 input("Enter for new Game or \
-                       next Round")
+next Round")
             else:
                 print("Invalid input")
 
