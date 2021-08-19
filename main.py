@@ -29,7 +29,7 @@ class RogueClass(Entity):
     health: int
 
     def __init__(self, name, health=80) -> None:
-        super().__init__(name)
+        super().__init__(name="Player")
         self.attack_min = 5
         self.attack_max = 40
         self.health = health
@@ -42,7 +42,7 @@ class PaladinClass(Entity):
     heal: int
 
     def __init__(self, name, health=120) -> None:
-        super().__init__(name)
+        super().__init__(name="Player")
         self.attack_min = 5
         self.attack_max = 15
         self.health = health
@@ -99,19 +99,19 @@ def main():
                                    4) show results\n")
             os.system("cls")
             if player_choice == "1":
+                os.system("cls")
                 player_attack_random = randint(player.attack_min,
                                                player.attack_max)
-                print(f"{player.name} attacks\
-                        monster for {player_attack_random} damage")
+                print(f"{player.name} attacks \
+monster for {player_attack_random} damage")
                 monster.health -= player_attack_random
                 if monster.health <= 0:
                     player_won = True
                 else:
-                    os.system("cls")
                     monster_attack_random = randint(monster.attack_min,
                                                     monster.attack_max)
-                    print(f'{monster.name} attacks\
-                            {player.name} for {monster_attack_random} damage')
+                    print(f'{monster.name} attacks \
+{player.name} for {monster_attack_random} damage')
                     player.health -= monster_attack_random
                 if player.health <= 0:
                     monster_won = True
@@ -121,8 +121,8 @@ def main():
                     monster_attack_random = randint(monster.attack_min,
                                                     monster.attack_max)
                     print(f'{player.name} heals himself for {player.heal}\n\n\
-                            {monster.name} attacks {player.name} for\
-                            {monster_attack_random} damage')
+{monster.name} attacks {player.name} for\
+{monster_attack_random} damage')
                     player.health += player.heal
                     player.health -= monster_attack_random
                     input("Enter for next round.")
@@ -141,6 +141,7 @@ def main():
                         highscore += f"{a} : {b}\n"
                 print(highscore)
                 input("Enter for new Game\nnext Round")
+                os.system("cls")
             else:
                 print("Invalid input")
 
