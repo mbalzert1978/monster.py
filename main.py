@@ -9,6 +9,8 @@ CLEAR = True
 class Entity:
     name: str
     health: int
+    attack_min: int
+    attack_max: int
 
     def __init__(self, name="Player", health=100) -> None:
         self.name = name
@@ -49,7 +51,7 @@ def game_end(winner_name) -> None:
     print(f"{winner_name} won the game.")
 
 
-def main() -> None:
+def main(monster: Monster) -> None:
     game_running = True
     game_result = []
     clear_screen()
@@ -58,15 +60,14 @@ def main() -> None:
     print("What Heroclass should your Hero be?")
     player_choice = input("Rogue, or Paladin: ")
     player = create_player(player_name, player_choice)
-    monster = Monster()
 
     while game_running:
         new_round = True
         player_won = False
         monster_won = False
-        counter = 0
+        rounds_played = 0
         while new_round:
-            counter += 1
+            rounds_played += 1
             if not player_won and not monster_won:
                 print(
                     f"{player.name} has {player.health} "
@@ -78,7 +79,7 @@ def main() -> None:
                 round_result = {
                     "name": player.name,
                     "health": player.health,
-                    "rounds": counter,
+                    "rounds": rounds_played,
                 }
                 game_result.append(round_result)
                 new_round = False
@@ -87,78 +88,103 @@ def main() -> None:
                 round_result = {
                     "name": player.name,
                     "health": player.health,
-                    "rounds": counter,
+                    "rounds": rounds_played,
                 }
                 game_result.append(round_result)
                 new_round = False
             input("Enter for next round.")
             clear_screen()
-            player_choice = input(
-                "Please select an action\n"
-                "1) attack\n"
-                "2) heal\n"
-                "3) Exit game\n"
-                "4) show results\n"
-            )
+            draw_menu()
+            player_choice = input()
             clear_screen()
-            if player_choice == "1":
-                clear_screen()
-                player_attack_random = random.randint(
-                    player.attack_min, player.attack_max
-                )
-                print(
-                    f"{player.name} attacks monster for "
-                    f"{player_attack_random} damage"
-                )
-                monster.health -= player_attack_random
-                if monster.health <= 0:
-                    player_won = True
-                else:
-                    monster_attack_random = random.randint(
-                        monster.attack_min, monster.attack_max
-                    )
-                    print(
-                        f"{monster.name} attacks {player.name} for "
-                        f"{monster_attack_random} damage"
-                    )
-                    player.health -= monster_attack_random
-                if player.health <= 0:
-                    monster_won = True
-                    input("Enter for next round.")
-            elif player_choice == "2":
-                if isinstance(player, PaladinClass):
-                    monster_attack_random = random.randint(
-                        monster.attack_min, monster.attack_max
-                    )
-                    print(
-                        f"{player.name} heals himself for {player.heal}\n\n"
-                        f"{monster.name} attacks {player.name} for "
-                        f"{monster_attack_random} damage"
-                    )
-                    player.health += player.heal
-                    player.health -= monster_attack_random
-                    input("Enter for next round.")
-                else:
-                    print("Rogues cant heal:)")
-                    time.sleep(1)
-            elif player_choice == "3":
-                new_round = False
-                game_running = False
-                break
+            match input():
+                case "1":
+                    clear_screen()
+                    attack_roll = calculate_attack(player)
+                    draw_player_attack(player, attack_roll)
+                    calculate_damage(monster, attack_roll)
+                    if monster.health <= 0:
+                        player_won = True
+                    else:
+                        attack_roll = calculate_attack(monster)
+                        draw_monster_attack(monster, player, attack_roll)
+                        calculate_damage(player, attack_roll)
+                    if player.health <= 0:
+                        monster_won = True
+                        input("Enter for next round.")
+                case "2":
+                    if isinstance(player, PaladinClass):
+                        attack_roll = random.randint(
+                            monster.attack_min, monster.attack_max
+                        )
+                        print(
+                            f"{player.name} heals himself for {player.heal}\n\n"
+                            f"{monster.name} attacks {player.name} for "
+                            f"{attack_roll} damage"
+                        )
+                        player.health += player.heal
+                        player.health -= attack_roll
+                        input("Enter for next round.")
+                    else:
+                        print("Rogues cant heal:)")
+                        time.sleep(1)
+                case "3":
+                    new_round = False
+                    game_running = False
+                    break
+                case "4":
+                    highscore = ""
+                    for element in game_result:
+                        for key, value in element.items():
+                            highscore += f"{key} : {value}\n"
+                    print(highscore)
+                    input("Enter for new Game\nnext Round")
+                    clear_screen()
+                case _:
+                    print("Invalid input")
 
-            elif player_choice == "4":
-                highscore = ""
-                for element in game_result:
-                    for key, value in element.items():
-                        highscore += f"{key} : {value}\n"
-                print(highscore)
-                input("Enter for new Game\nnext Round")
-                clear_screen()
-            else:
-                print("Invalid input")
+
+def draw_monster_attack(
+    monster: Entity, player: Entity, attack_roll: int
+) -> None:
+    """Draws the monster's attack"""
+    print(f"{monster.name} attacks {player.name} for {attack_roll} damage")
+
+
+def draw_player_attack(player: Entity, attack_roll: int) -> None:
+    """Draws the attack roll on the screen."""
+    print(f"{player.name} attacks monster for {attack_roll} damage.")
+
+
+def calculate_damage(entitiy: Entity, attack_roll: int) -> None:
+    """Substracts the damage dealt."""
+    entitiy.health -= attack_roll
+
+
+def calculate_attack(entity: Entity) -> int:
+    """
+    Evaluate the entity attackvalue.
+
+    Args:
+        entity: The entity object.
+
+    Returns:
+        The damage dealt.
+    """
+    return random.randint(entity.attack_min, entity.attack_max)
 
 
 def create_player(player_name: str, player_choice: str) -> Entity:
+    """
+    Creates a player object.
+
+    Args:
+        player_name: The name of the player.
+        player_choice: Class choice of the player.
+
+    Returns:
+        A Player entity.
+    """
     while True:
         match player_choice.lower():
             case "rogue":
@@ -167,6 +193,17 @@ def create_player(player_name: str, player_choice: str) -> Entity:
                 return player_class_factory[player_choice](name=player_name)
             case _:
                 print(f"I don't know {player_choice}")
+
+
+def draw_menu() -> None:
+    """Draws the menu."""
+    print(
+        "Please select an action\n"
+        "1) attack\n"
+        "2) heal\n"
+        "3) Exit game\n"
+        "4) show results\n"
+    )
 
 
 def clear_screen(clear: bool = CLEAR) -> None:
@@ -186,4 +223,5 @@ def clear_screen(clear: bool = CLEAR) -> None:
 
 
 if __name__ == "__main__":
-    main()
+    monster = Monster()
+    main(monster)
