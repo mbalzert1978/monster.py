@@ -2,6 +2,7 @@ import os
 import time
 import random
 import platform
+import strategy
 
 CLEAR = True
 
@@ -31,8 +32,11 @@ class RogueClass(Entity):
     def __init__(self, name="Player", health=80) -> None:
         super().__init__(name)
         self.attack_min = 5
-        self.attack_max = 40
+        self.attack_max = 15
         self.health = health
+
+    def special(self) -> None:
+        pass
 
 
 class PaladinClass(Entity):
@@ -42,6 +46,12 @@ class PaladinClass(Entity):
         self.attack_max = 15
         self.health = health
         self.heal = 20
+
+    def special(self) -> None:
+        self.health += self.heal
+
+    def draw_special(self) -> None:
+        print(f"{self.name} heals himself for {self.heal} points.")
 
 
 player_class_factory = {"rogue": RogueClass, "paladin": PaladinClass}
@@ -95,18 +105,21 @@ def main(monster: Monster) -> None:
             input("Enter for next round.")
             clear_screen()
             draw_menu()
+
             match input():
                 case "1":
                     clear_screen()
-                    attack_roll = calculate_attack(player)
-                    draw_player_attack(player, attack_roll)
-                    calculate_damage(monster, attack_roll)
+                    player_strategy = strategy.PlayerAttack(player=player)
+                    context = strategy.MonsterGameContext(player_strategy)
+                    context.attack(monster)
                     if monster.health <= 0:
                         player_won = True
                     else:
-                        attack_roll = calculate_attack(monster)
-                        draw_monster_attack(monster, player, attack_roll)
-                        calculate_damage(player, attack_roll)
+                        monster_strategy = strategy.MonsterAttack(
+                            monster=monster, player=player
+                        )
+                        context.strategy = monster_strategy
+                        context.attack(player)
                     if player.health <= 0:
                         monster_won = True
                         input("Enter for next round.")
