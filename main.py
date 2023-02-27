@@ -1,6 +1,9 @@
 import os
 import time
 import random
+import platform
+
+CLEAR = True
 
 
 class Entity:
@@ -49,9 +52,9 @@ def game_end(winner_name) -> None:
 def main() -> None:
     game_running = True
     game_result = []
-    os.system("cls")
+    clear_screen()
     player_name = input("Tell me the Name of your Hero: ")
-    os.system("cls")
+    clear_screen()
     print("What Heroclass should your Hero be?")
     player_choice = input("Rogue, or Paladin: ")
     player = create_player(player_name, player_choice)
@@ -89,7 +92,7 @@ def main() -> None:
                 game_result.append(round_result)
                 new_round = False
             input("Enter for next round.")
-            os.system("cls")
+            clear_screen()
             player_choice = input(
                 "Please select an action\n"
                 "1) attack\n"
@@ -97,9 +100,9 @@ def main() -> None:
                 "3) Exit game\n"
                 "4) show results\n"
             )
-            os.system("cls")
+            clear_screen()
             if player_choice == "1":
-                os.system("cls")
+                clear_screen()
                 player_attack_random = random.randint(
                     player.attack_min, player.attack_max
                 )
@@ -150,7 +153,7 @@ def main() -> None:
                         highscore += f"{key} : {value}\n"
                 print(highscore)
                 input("Enter for new Game\nnext Round")
-                os.system("cls")
+                clear_screen()
             else:
                 print("Invalid input")
 
@@ -164,6 +167,22 @@ def create_player(player_name: str, player_choice: str) -> Entity:
                 return player_class_factory[player_choice](name=player_name)
             case _:
                 print(f"I don't know {player_choice}")
+
+
+def clear_screen(clear: bool = CLEAR) -> None:
+    """Clears the screen."""
+    if not clear:
+        return
+    match platform.system().lower():
+        case "windows":
+            os.system("cls")
+        case "linux":
+            os.system("clear")
+        case "darwin":
+            os.system("clear")
+        case _:
+            print("OS not supported. Not clearing screen.")
+            clear = False
 
 
 if __name__ == "__main__":
