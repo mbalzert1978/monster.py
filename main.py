@@ -95,8 +95,6 @@ def main(monster: Monster) -> None:
             input("Enter for next round.")
             clear_screen()
             draw_menu()
-            player_choice = input()
-            clear_screen()
             match input():
                 case "1":
                     clear_screen()
